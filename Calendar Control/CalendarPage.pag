@@ -1,0 +1,95 @@
+VERSION 5.00
+Begin VB.PropertyPage CalendarPage 
+   Caption         =   "General"
+   ClientHeight    =   1620
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   3675
+   PaletteMode     =   0  'Halftone
+   ScaleHeight     =   1620
+   ScaleWidth      =   3675
+   Begin VB.ComboBox cbogridlines 
+      Height          =   315
+      ItemData        =   "CalendarPage.pgx":0000
+      Left            =   1200
+      List            =   "CalendarPage.pgx":000A
+      Style           =   2  'Dropdown List
+      TabIndex        =   3
+      Top             =   840
+      Width           =   2055
+   End
+   Begin VB.ComboBox cbofirstday 
+      Height          =   315
+      ItemData        =   "CalendarPage.pgx":001B
+      Left            =   1200
+      List            =   "CalendarPage.pgx":0034
+      Style           =   2  'Dropdown List
+      TabIndex        =   1
+      Top             =   360
+      Width           =   2055
+   End
+   Begin VB.Label Label2 
+      AutoSize        =   -1  'True
+      Caption         =   "GridLines:"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   240
+      Left            =   240
+      TabIndex        =   2
+      Top             =   840
+      Width           =   885
+   End
+   Begin VB.Label Label1 
+      AutoSize        =   -1  'True
+      Caption         =   "First Day:"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   240
+      Left            =   240
+      TabIndex        =   0
+      Top             =   360
+      Width           =   855
+   End
+End
+Attribute VB_Name = "CalendarPage"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Private Sub cbofirstday_Click()
+    Changed = True
+End Sub
+
+Private Sub cbogridlines_Click()
+     Changed = True
+End Sub
+
+Private Sub PropertyPage_ApplyChanges()
+    Dim i As Integer
+    For i = 0 To SelectedControls.Count - 1
+        SelectedControls(i).FirstDay = cbofirstday.ListIndex
+        SelectedControls(i).GridLines = cbogridlines.Text
+    Next i
+End Sub
+
+Public Sub PropertyPage_SelectionChanged()
+    Dim n As Integer
+    n = SelectedControls.Count
+    cbofirstday.ListIndex = SelectedControls(n - 1).FirstDay
+    cbogridlines.Text = SelectedControls(n - 1).GridLines
+    Changed = False
+End Sub
